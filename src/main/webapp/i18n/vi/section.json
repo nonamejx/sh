@@ -1,0 +1,28 @@
+
+{
+    "shApp": {
+        "section" : {
+            "home": {
+                "title": "Sections",
+                "createLabel": "Thêm mới một Section",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Section",
+                "search": "Tìm Section"
+            },
+            "created": "Một Section mới được tạo với định danh {{ param }}",
+            "updated": "Một Section cập nhật với định danh {{ param }}",
+            "deleted": "Một Section đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Section {{ id }}?"
+            },
+            "detail": {
+                "title": "Section"
+            },
+            "text": "Text",
+            "audioName": "Audio Name",
+            "imageName": "Image Name",
+            "imageTag": "Image Tag",
+            "partNumber": "Part Number",
+            "question": "Question"
+        }
+    }
+}

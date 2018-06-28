@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="section">
+            <h2><span jhiTranslate="shApp.section.detail.title">Section</span> {{section.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shApp.section.text">Text</span></dt>
+                <dd>
+                    <span>{{section.text}}</span>
+                </dd>
+                <dt><span jhiTranslate="shApp.section.audioName">Audio Name</span></dt>
+                <dd>
+                    <span>{{section.audioName}}</span>
+                </dd>
+                <dt><span jhiTranslate="shApp.section.imageName">Image Name</span></dt>
+                <dd>
+                    <span>{{section.imageName}}</span>
+                </dd>
+                <dt><span jhiTranslate="shApp.section.imageTag">Image Tag</span></dt>
+                <dd>
+                    <span>{{section.imageTag}}</span>
+                </dd>
+                <dt><span jhiTranslate="shApp.section.partNumber">Part Number</span></dt>
+                <dd>
+                    <span>{{section.partNumber}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/section-sh', section.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

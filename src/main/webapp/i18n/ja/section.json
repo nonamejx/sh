@@ -1,0 +1,28 @@
+
+{
+    "shApp": {
+        "section" : {
+            "home": {
+                "title": "Sections",
+                "createLabel": "Section を追加",
+                "createOrEditLabel": "Sectionを追加または編集",
+                "search": "Search for Section"
+            },
+            "created": "A new Section is created with identifier {{ param }}",
+            "updated": "A Section is updated with identifier {{ param }}",
+            "deleted": "A Section is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Section {{ id }}を削除してもよろしいですか？"
+            },
+            "detail": {
+                "title": "Section"
+            },
+            "text": "Text",
+            "audioName": "Audio Name",
+            "imageName": "Image Name",
+            "imageTag": "Image Tag",
+            "partNumber": "Part Number",
+            "question": "Question"
+        }
+    }
+}

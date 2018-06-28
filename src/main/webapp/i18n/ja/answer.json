@@ -1,0 +1,25 @@
+
+{
+    "shApp": {
+        "answer" : {
+            "home": {
+                "title": "Answers",
+                "createLabel": "Answer を追加",
+                "createOrEditLabel": "Answerを追加または編集",
+                "search": "Search for Answer"
+            },
+            "created": "A new Answer is created with identifier {{ param }}",
+            "updated": "A Answer is updated with identifier {{ param }}",
+            "deleted": "A Answer is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Answer {{ id }}を削除してもよろしいですか？"
+            },
+            "detail": {
+                "title": "Answer"
+            },
+            "title": "Title",
+            "correctAnswer": "Correct Answer",
+            "question": "Question"
+        }
+    }
+}
