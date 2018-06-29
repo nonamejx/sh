@@ -16,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -142,6 +145,9 @@ public class Migrate {
             section2List.add(section2);
         }
 
+        // set answer key
+        setAnswerKey(section2List, "part-1-key.txt");
+
         return section2List;
     }
 
@@ -183,6 +189,9 @@ public class Migrate {
             section2List.add(section2);
         });
 
+        // set answer key
+        setAnswerKey(section2List, "part-2-key.txt");
+
         return section2List;
     }
 
@@ -219,6 +228,9 @@ public class Migrate {
                 section2List.get(i).setAudioName(section2List.get(i).getAudioName().replace("These questions refer to the audio file ", ""));
             }
         }
+
+        // set answer key
+        setAnswerKey(section2List, "part-3-key.txt");
 
         return section2List;
     }
@@ -287,6 +299,9 @@ public class Migrate {
             }
         }
 
+        // set answer key
+        setAnswerKey(section2List, "part-4-key.txt");
+
         return section2List;
     }
 
@@ -332,6 +347,27 @@ public class Migrate {
             section2.setQuestions(question2List);
             section2List.add(section2);
         });
+    }
+
+    private void setAnswerKey(final List<Section> sectionList, final String answerKeyFileName) throws IOException {
+        if (!CollectionUtils.isEmpty(sectionList)) {
+            final Resource resource = new ClassPathResource(answerKeyFileName);
+            final List<Question> questionList = sectionList.stream()
+                .flatMap(s -> s.getQuestions().stream())
+                .collect(Collectors.toList());
+            final Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+            final List<String> lines = stream.collect(Collectors.toList());
+            if (questionList.size() == lines.size()) {
+                for (int i = 0; i < lines.size(); i++) {
+                    final String key = lines.get(i);
+                    questionList.get(i).getAnswers()
+                        .stream()
+                        .filter(a -> key.equalsIgnoreCase(a.getTitle().charAt(1) + ""))
+                        .findFirst()
+                        .ifPresent(a -> a.setCorrectAnswer(true));
+                }
+            }
+        }
     }
 
 }
