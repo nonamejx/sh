@@ -1,17 +1,22 @@
 package com.noname.sh.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import org.springframework.data.elasticsearch.annotations.Document;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Section.
@@ -63,17 +68,21 @@ public class Section implements Serializable {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Section text(String text) {
         this.text = text;
         return this;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getAudioName() {
         return audioName;
+    }
+
+    public void setAudioName(String audioName) {
+        this.audioName = audioName;
     }
 
     public Section audioName(String audioName) {
@@ -81,12 +90,12 @@ public class Section implements Serializable {
         return this;
     }
 
-    public void setAudioName(String audioName) {
-        this.audioName = audioName;
-    }
-
     public String getImageName() {
         return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Section imageName(String imageName) {
@@ -94,12 +103,12 @@ public class Section implements Serializable {
         return this;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
-
     public String getImageTag() {
         return imageTag;
+    }
+
+    public void setImageTag(String imageTag) {
+        this.imageTag = imageTag;
     }
 
     public Section imageTag(String imageTag) {
@@ -107,12 +116,12 @@ public class Section implements Serializable {
         return this;
     }
 
-    public void setImageTag(String imageTag) {
-        this.imageTag = imageTag;
-    }
-
     public Long getPartNumber() {
         return partNumber;
+    }
+
+    public void setPartNumber(Long partNumber) {
+        this.partNumber = partNumber;
     }
 
     public Section partNumber(Long partNumber) {
@@ -120,12 +129,12 @@ public class Section implements Serializable {
         return this;
     }
 
-    public void setPartNumber(Long partNumber) {
-        this.partNumber = partNumber;
-    }
-
     public Set<Question> getQuestions() {
         return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 
     public Section questions(Set<Question> questions) {
@@ -143,10 +152,6 @@ public class Section implements Serializable {
         this.questions.remove(question);
         question.setSection(null);
         return this;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -173,12 +178,12 @@ public class Section implements Serializable {
     @Override
     public String toString() {
         return "Section{" +
-            "id=" + getId() +
-            ", text='" + getText() + "'" +
-            ", audioName='" + getAudioName() + "'" +
-            ", imageName='" + getImageName() + "'" +
-            ", imageTag='" + getImageTag() + "'" +
-            ", partNumber=" + getPartNumber() +
-            "}";
+               "id=" + getId() +
+               ", text='" + getText() + "'" +
+               ", audioName='" + getAudioName() + "'" +
+               ", imageName='" + getImageName() + "'" +
+               ", imageTag='" + getImageTag() + "'" +
+               ", partNumber=" + getPartNumber() +
+               "}";
     }
 }

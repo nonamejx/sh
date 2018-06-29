@@ -11,8 +11,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="shApp.section.text" for="field_text">Text</label>
-                    <input type="text" class="form-control" name="text" id="field_text"
-                        [(ngModel)]="section.text" required minlength="1" maxlength="65535"/>
+                    <textarea class="form-control" name="text" id="field_text" jhiAutosize
+                              [(ngModel)]="section.text" required minlength="1" maxlength="65535"></textarea>
                     <div [hidden]="!(editForm.controls.text?.dirty && editForm.controls.text?.invalid)">
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.text?.errors?.required" jhiTranslate="entity.validation.required">

@@ -1,18 +1,15 @@
 package com.noname.sh.service.mapper;
 
-import com.noname.sh.domain.*;
+import com.noname.sh.domain.Section;
 import com.noname.sh.service.dto.SectionDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper for the entity Section and its DTO SectionDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {QuestionMapper.class})
 public interface SectionMapper extends EntityMapper<SectionDTO, Section> {
 
-
-    @Mapping(target = "questions", ignore = true)
     Section toEntity(SectionDTO sectionDTO);
 
     default Section fromId(Long id) {

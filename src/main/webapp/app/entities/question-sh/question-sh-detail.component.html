@@ -15,6 +15,12 @@
                         <a [routerLink]="['/section-sh', question.sectionId, 'view']">{{question.sectionText}}</a>
                     </div>
                 </dd>
+                <dt><span>Answers: </span></dt>
+                <dd>
+                    <ul *ngFor="let answer of question.answers">
+                        <li>{{answer.id}} || {{answer.title}} || {{answer.correctAnswer}}</li>
+                    </ul>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -11,6 +11,7 @@ import {
     sectionRoute,
     sectionPopupRoute
 } from './';
+import { AutosizeDirective } from 'app/directive/autosize.directive';
 
 const ENTITY_STATES = [...sectionRoute, ...sectionPopupRoute];
 
@@ -21,7 +22,8 @@ const ENTITY_STATES = [...sectionRoute, ...sectionPopupRoute];
         SectionShDetailComponent,
         SectionShUpdateComponent,
         SectionShDeleteDialogComponent,
-        SectionShDeletePopupComponent
+        SectionShDeletePopupComponent,
+        AutosizeDirective
     ],
     entryComponents: [SectionShComponent, SectionShUpdateComponent, SectionShDeleteDialogComponent, SectionShDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

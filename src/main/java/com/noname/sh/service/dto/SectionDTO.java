@@ -1,8 +1,13 @@
 package com.noname.sh.service.dto;
 
-import javax.validation.constraints.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the Section entity.
@@ -23,6 +28,8 @@ public class SectionDTO implements Serializable {
 
     @NotNull
     private Long partNumber;
+
+    private Set<QuestionDTO> questions;
 
     public Long getId() {
         return id;
@@ -72,36 +79,56 @@ public class SectionDTO implements Serializable {
         this.partNumber = partNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+    public Set<QuestionDTO> getQuestions() {
+        return questions;
+    }
 
-        SectionDTO sectionDTO = (SectionDTO) o;
-        if (sectionDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), sectionDTO.getId());
+    public void setQuestions(final Set<QuestionDTO> questions) {
+        this.questions = questions;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof SectionDTO)) return false;
+
+        final SectionDTO that = (SectionDTO) o;
+
+        return new EqualsBuilder()
+            .append(getId(), that.getId())
+            .append(getText(), that.getText())
+            .append(getAudioName(), that.getAudioName())
+            .append(getImageName(), that.getImageName())
+            .append(getImageTag(), that.getImageTag())
+            .append(getPartNumber(), that.getPartNumber())
+            .append(getQuestions(), that.getQuestions())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return new HashCodeBuilder(17, 37)
+            .append(getId())
+            .append(getText())
+            .append(getAudioName())
+            .append(getImageName())
+            .append(getImageTag())
+            .append(getPartNumber())
+            .append(getQuestions())
+            .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "SectionDTO{" +
-            "id=" + getId() +
-            ", text='" + getText() + "'" +
-            ", audioName='" + getAudioName() + "'" +
-            ", imageName='" + getImageName() + "'" +
-            ", imageTag='" + getImageTag() + "'" +
-            ", partNumber=" + getPartNumber() +
-            "}";
+        return new ToStringBuilder(this)
+            .append("id", id)
+            .append("text", text)
+            .append("audioName", audioName)
+            .append("imageName", imageName)
+            .append("imageTag", imageTag)
+            .append("partNumber", partNumber)
+            .append("questions", questions)
+            .toString();
     }
 }
