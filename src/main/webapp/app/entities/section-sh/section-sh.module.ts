@@ -11,7 +11,7 @@ import {
     sectionRoute,
     sectionPopupRoute
 } from './';
-import { AutosizeDirective } from 'app/directive/autosize.directive';
+import { AutosizeDirective } from 'app/shared/util/autosize.directive';
 
 const ENTITY_STATES = [...sectionRoute, ...sectionPopupRoute];
 
