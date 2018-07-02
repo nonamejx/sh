@@ -5,7 +5,8 @@ import { ISectionSh } from 'app/shared/model/section-sh.model';
 
 @Component({
     selector: 'jhi-section-sh-detail',
-    templateUrl: './section-sh-detail.component.html'
+    templateUrl: './section-sh-detail.component.html',
+    styleUrls: ['./section-sh-detail.component.css']
 })
 export class SectionShDetailComponent implements OnInit {
     section: ISectionSh;

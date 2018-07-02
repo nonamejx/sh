@@ -18,7 +18,10 @@
                 <dt><span>Answers: </span></dt>
                 <dd>
                     <ul *ngFor="let answer of question.answers">
-                        <li>{{answer.id}} || {{answer.title}} || {{answer.correctAnswer}}</li>
+                        <li>
+                            <input type="checkbox" [checked]="answer.correctAnswer" disabled="disabled" />
+                            <span>{{answer.id}} || {{answer.title}}</span>
+                        </li>
                     </ul>
                 </dd>
             </dl>

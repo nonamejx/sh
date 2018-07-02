@@ -27,11 +27,14 @@
                 </dd>
                 <dt><span>Questions: </span></dt>
                 <dd>
-                    <ul *ngFor="let question of section.questions" style="list-style: none">
+                    <ul *ngFor="let question of section.questions">
                         <li>
                             <span>{{question.id}} || {{question.title}}</span>
                             <ul *ngFor="let answer of question.answers">
-                                <li>{{answer.id}} || {{answer.title}} || {{answer.correctAnswer}}</li>
+                                <li>
+                                    <input type="checkbox" [checked]="answer.correctAnswer" disabled="disabled" />
+                                    <span>|| {{answer.id}} || {{answer.title}}</span>
+                                </li>
                             </ul>
                         </li>
                     </ul>
