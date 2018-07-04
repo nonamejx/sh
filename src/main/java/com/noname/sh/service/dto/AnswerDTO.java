@@ -12,7 +12,7 @@ public class AnswerDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, max = 7280)
     private String title;
 
     @NotNull

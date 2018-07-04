@@ -81,6 +81,8 @@ spring:
         locator:
             discovery:
                 enabled: true
+    resources:
+        static-locations: classpath:/migrate-data/
 
 # ===================================================================
 # To enable SSL, generate a certificate using:

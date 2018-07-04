@@ -1,12 +1,11 @@
 package com.noname.sh.service.dto;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,7 +16,7 @@ public class QuestionDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, max = 7280)
     private String title;
 
     private Long sectionId;
@@ -67,31 +66,24 @@ public class QuestionDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-        if (!(o instanceof QuestionDTO)) return false;
-
-        final QuestionDTO that = (QuestionDTO) o;
-
-        return new EqualsBuilder()
-            .append(getId(), that.getId())
-            .append(getTitle(), that.getTitle())
-            .append(getSectionId(), that.getSectionId())
-            .append(getSectionText(), that.getSectionText())
-            .append(getAnswers(), that.getAnswers())
-            .isEquals();
+        QuestionDTO questionDTO = (QuestionDTO) o;
+        if (questionDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), questionDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(getId())
-            .append(getTitle())
-            .append(getSectionId())
-            .append(getSectionText())
-            .append(getAnswers())
-            .toHashCode();
+        return Objects.hashCode(getId());
     }
 
     @Override

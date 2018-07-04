@@ -27,8 +27,8 @@ public class Answer implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
-    @Column(name = "title", length = 65535, nullable = false)
+    @Size(min = 1, max = 7280)
+    @Column(name = "title", length = 7280, nullable = false)
     private String title;
 
     @NotNull
@@ -42,9 +42,9 @@ public class Answer implements Serializable {
     public Answer() {
     }
 
-    public Answer(final String title, final boolean isCorrectAnswer) {
+    public Answer(@NotNull @Size(min = 1, max = 7280) final String title, @NotNull final Boolean correctAnswer) {
         this.title = title;
-        this.correctAnswer = isCorrectAnswer;
+        this.correctAnswer = correctAnswer;
     }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

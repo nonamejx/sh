@@ -1,12 +1,11 @@
 package com.noname.sh.service.dto;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,7 +16,7 @@ public class SectionDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, max = 7280)
     private String text;
 
     private String audioName;
@@ -88,35 +87,24 @@ public class SectionDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-        if (!(o instanceof SectionDTO)) return false;
-
-        final SectionDTO that = (SectionDTO) o;
-
-        return new EqualsBuilder()
-            .append(getId(), that.getId())
-            .append(getText(), that.getText())
-            .append(getAudioName(), that.getAudioName())
-            .append(getImageName(), that.getImageName())
-            .append(getImageTag(), that.getImageTag())
-            .append(getPartNumber(), that.getPartNumber())
-            .append(getQuestions(), that.getQuestions())
-            .isEquals();
+        SectionDTO sectionDTO = (SectionDTO) o;
+        if (sectionDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), sectionDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(getId())
-            .append(getText())
-            .append(getAudioName())
-            .append(getImageName())
-            .append(getImageTag())
-            .append(getPartNumber())
-            .append(getQuestions())
-            .toHashCode();
+        return Objects.hashCode(getId());
     }
 
     @Override

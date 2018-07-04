@@ -16,14 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -37,7 +39,7 @@ import java.util.stream.Stream;
 public class Migrate {
 
     private static final String SEGMENT_BREAK = "_______________________________";
-    private final Logger log = LoggerFactory.getLogger(SectionResource.class);
+    private final Logger log = LoggerFactory.getLogger(Migrate.class);
 
     private final AnswerService answerService;
     private final QuestionService questionService;
@@ -50,13 +52,14 @@ public class Migrate {
     }
 
     @GetMapping
-    public void migrate() throws Exception {
+    public ResponseEntity<String> migrate() throws Exception {
         log.debug("migrate() is called !");
         save(getPartOne());
         save(getPartTwo());
         save(getPartThree());
         save(getPartFour());
         log.debug("migrate() is DONE !");
+        return new ResponseEntity<>("migrate() is DONE !", HttpStatus.OK);
     }
 
     private void save(List<Section> sectionList) {
@@ -104,9 +107,8 @@ public class Migrate {
     private List<Section> getPartOne() throws Exception {
         final List<Section> section2List = new ArrayList<>();
 
-        final Resource resource = new ClassPathResource("part-1.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-1.txt");
 
         stream.forEach(s -> {
             if (!"".equals(s) && !"© www.english-test.net".equals(s)) {
@@ -146,7 +148,7 @@ public class Migrate {
         }
 
         // set answer key
-        setAnswerKey(section2List, "part-1-key.txt");
+        setAnswerKey(section2List, "migrate-data/part-1-key.txt");
 
         return section2List;
     }
@@ -154,9 +156,8 @@ public class Migrate {
     private List<Section> getPartTwo() throws Exception {
         final List<Section> section2List = new ArrayList<>();
 
-        final Resource resource = new ClassPathResource("part-2.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-2.txt");
 
         stream.forEach(s -> {
             if (!"".equals(s) && !"© www.english-test.net".equals(s)
@@ -190,7 +191,7 @@ public class Migrate {
         });
 
         // set answer key
-        setAnswerKey(section2List, "part-2-key.txt");
+        setAnswerKey(section2List, "migrate-data/part-2-key.txt");
 
         return section2List;
     }
@@ -198,9 +199,8 @@ public class Migrate {
     private List<Section> getPartThree() throws Exception {
         final List<Section> section2List = new ArrayList<>();
 
-        final Resource resource = new ClassPathResource("part-3-question.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-3-question.txt");
 
         stream.forEach(s -> {
             if (!"".equals(s) && !"© www.english-test.net".equals(s)
@@ -230,15 +230,14 @@ public class Migrate {
         }
 
         // set answer key
-        setAnswerKey(section2List, "part-3-key.txt");
+        setAnswerKey(section2List, "migrate-data/part-3-key.txt");
 
         return section2List;
     }
 
     private String[] getPartThreeSectionTexts() throws Exception {
-        final Resource resource = new ClassPathResource("part-3-answer.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-3-answer.txt");
 
         stream.forEach(s -> {
             if (s.startsWith("This transcript refers to the audio file")) {
@@ -267,9 +266,8 @@ public class Migrate {
     private List<Section> getPartFour() throws Exception {
         final List<Section> section2List = new ArrayList<>();
 
-        final Resource resource = new ClassPathResource("part-4-question.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-4-question.txt");
 
         stream.forEach(s -> {
             if (!"".equals(s) && !"© www.english-test.net".equals(s)
@@ -300,15 +298,14 @@ public class Migrate {
         }
 
         // set answer key
-        setAnswerKey(section2List, "part-4-key.txt");
+        setAnswerKey(section2List, "migrate-data/part-4-key.txt");
 
         return section2List;
     }
 
     private String[] getPartFourSectionTexts() throws Exception {
-        final Resource resource = new ClassPathResource("part-4-answer.txt");
         List<String> lines = new ArrayList<>();
-        Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+        Stream<String> stream = getLines("migrate-data/part-4-answer.txt");
 
         stream.forEach(s -> {
             if (s.startsWith("This transcript refers to the audio file")) {
@@ -351,11 +348,10 @@ public class Migrate {
 
     private void setAnswerKey(final List<Section> sectionList, final String answerKeyFileName) throws IOException {
         if (!CollectionUtils.isEmpty(sectionList)) {
-            final Resource resource = new ClassPathResource(answerKeyFileName);
             final List<Question> questionList = sectionList.stream()
                 .flatMap(s -> s.getQuestions().stream())
                 .collect(Collectors.toList());
-            final Stream<String> stream = Files.lines(Paths.get(resource.getFile().getAbsolutePath()));
+            final Stream<String> stream = getLines(answerKeyFileName);
             final List<String> lines = stream.collect(Collectors.toList());
             if (questionList.size() == lines.size()) {
                 for (int i = 0; i < lines.size(); i++) {
@@ -368,6 +364,12 @@ public class Migrate {
                 }
             }
         }
+    }
+
+    private Stream<String> getLines(final String fileName) throws IOException {
+        Resource resource = new ClassPathResource(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+        return reader.lines();
     }
 
 }

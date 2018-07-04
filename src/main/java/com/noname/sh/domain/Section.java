@@ -34,8 +34,8 @@ public class Section implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
-    @Column(name = "text", length = 65535, nullable = false)
+    @Size(min = 1, max = 7280)
+    @Column(name = "text", length = 7280, nullable = false)
     private String text;
 
     @Column(name = "audio_name")

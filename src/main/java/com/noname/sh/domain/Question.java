@@ -30,8 +30,8 @@ public class Question implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 65535)
-    @Column(name = "title", length = 65535, nullable = false)
+    @Size(min = 1, max = 7280)
+    @Column(name = "title", length = 7280, nullable = false)
     private String title;
 
     @OneToMany(mappedBy = "question")
@@ -45,7 +45,7 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(final String title, final Set<Answer> answers) {
+    public Question(@NotNull @Size(min = 1, max = 7280) final String title, final Set<Answer> answers) {
         this.title = title;
         this.answers = answers;
     }

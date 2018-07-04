@@ -1,4 +1,4 @@
-<div class="row justify-content-center" xmlns="http://www.w3.org/1999/html">
+<div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="section">
             <h2><span jhiTranslate="shApp.section.detail.title">Section</span> {{section.id}}</h2>
@@ -14,13 +14,14 @@
                     <span>{{section.text}}</span>
                 </dd>
                 <dt><span jhiTranslate="shApp.section.audioName">Audio Name</span></dt>
-                <dd>
-                    <span>{{section.audioName}}</span>
+                <dd *ngIf="section.audioName">
+                    <audio controls>
+                        <source [src]="'files/audios/part-' + section.partNumber + '/' + section.audioName" type="audio/mp3">
+                    </audio>
                 </dd>
                 <dt><span jhiTranslate="shApp.section.imageName">Image Name</span></dt>
-                <br>
-                    <span>{{section.imageName}}</span><br/>
-                    <img [src]="'http://localhost:8080/files/' + section.imageName" width="300px" height="300px" />
+                <dd *ngIf="section.imageName">
+                    <img [src]="'files/' + section.imageName" width="300px" height="300px" />
                 </dd>
                 <dt><span jhiTranslate="shApp.section.imageTag">Image Tag</span></dt>
                 <dd>

@@ -10,7 +10,7 @@
                 "maxlength"
             ],
             "fieldValidateRulesMinlength": 1,
-            "fieldValidateRulesMaxlength": 65535
+            "fieldValidateRulesMaxlength": 7280
         },
         {
             "fieldName": "correctAnswer",
