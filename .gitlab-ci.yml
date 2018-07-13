@@ -12,6 +12,14 @@ stages:
     - deploy
 
 before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" > ~/deploykey
+    - chmod 600 ~/deploykey
+    - mkdir -p ~/.ssh
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - ssh-add ~/deploykey
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     - export MAVEN_USER_HOME=`pwd`/.maven
     - chmod +x mvnw
     - ./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.11.3 -DyarnVersion=v1.6.0 -Dmaven.repo.local=$MAVEN_USER_HOME
@@ -35,10 +43,18 @@ maven-front-test:
     artifacts:
         paths:
             - target/test-results/jest/*
-maven-deploy:
-    stage: deploy
+maven-package:
+    stage: package
     script:
-        - ./mvnw com.heroku.sdk:heroku-maven-plugin:1.1.1:deploy -DskipTests -Pprod -Dheroku.appName= -Dmaven.repo.local=$MAVEN_USER_HOME
+        - ./mvnw verify -Pprod -DskipTests -Dmaven.repo.local=$MAVEN_USER_HOME
     artifacts:
         paths:
             - target/*.war
+manualDeploy:
+    stage: deploy
+    script:
+        - scp target/*.war root@128.199.127.135:~/sh/
+    artifacts:
+        paths:
+            - target/*.war
+        expire_in: 1d
