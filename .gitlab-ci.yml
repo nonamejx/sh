@@ -53,7 +53,9 @@ maven-package:
 manualDeploy:
     stage: deploy
     script:
+        - ssh root@128.199.127.135 'service sh150i stop'
         - scp target/*.war root@128.199.127.135:~/sh/
+        - ssh root@128.199.127.135 'service sh150i start'
     artifacts:
         paths:
             - target/*.war
