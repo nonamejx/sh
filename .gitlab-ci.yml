@@ -46,7 +46,7 @@ maven-front-test:
 maven-package:
     stage: package
     script:
-        - ./mvnw verify -Pprod -DskipTests -Dmaven.repo.local=$MAVEN_USER_HOME
+        - ./mvnw verify -Pprod,swagger -DskipTests -Dmaven.repo.local=$MAVEN_USER_HOME
     artifacts:
         paths:
             - target/*.war
