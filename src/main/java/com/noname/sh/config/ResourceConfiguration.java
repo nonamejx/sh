@@ -11,6 +11,6 @@ public class ResourceConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/files/**")
             .addResourceLocations("file:/Users/hhuynh/Documents/part-1/")
-            .addResourceLocations("file:/root/sh/data/part-1/"); // todo change if prod mode
+            .addResourceLocations("file:/root/sh/data/"); // todo change if prod mode
     }
 }
